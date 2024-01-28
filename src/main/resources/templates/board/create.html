@@ -1,0 +1,26 @@
+<th:block th:replace="~{layout/basic :: setContent(~{this::content})}">
+
+    <th:block th:fragment="content">
+
+        <form th:action="@{/board/create}" method="post" class="">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" name="title" id="title"  class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea name="content" id="content" class="form-control" cols="30" rows="10"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="author">작성자</label>
+                <input type="text" name="author" id="author" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">작성</button>
+        </form>
+
+    </th:block>
+
+</th:block>

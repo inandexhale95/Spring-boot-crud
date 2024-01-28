@@ -1,0 +1,60 @@
+<th:block th:replace="~{layout/basic :: setContent(~{this::content})}">
+
+  <th:block th:fragment="content">
+
+    <table class="table table-striped">
+
+      <thead>
+      <tr>
+        <th scope="col">번호</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">날짜</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="boardDTO : ${result.dtoList}">
+        <th scope="row">
+          <a th:href="@{/board/read(bno = ${boardDTO.bno})}">[[${boardDTO.bno}]]</a>
+        </th>
+        <th scope="row">[[${boardDTO.title}]]</th>
+        <th scope="row">[[${boardDTO.author}]]</th>
+        <th scope="row">[[${boardDTO.createDate}]]</th>
+      </tr>
+      </tbody>
+
+    </table>
+
+    <!-- 페이지네이션 -->
+    <ul class="pagination justify-content-center align-items-center">
+
+      <li th:class="page-item" th:if="${result.prev}">
+        <a class="page-link" th:href="@{/board(currentPage = ${result.start - 1})}">
+          Prev
+        </a>
+      </li>
+
+      <li th:class="'page-item ' + ${result.currentPage == page ? 'active' : ''}" th:each="page : ${result.pageList}">
+        <a class="page-link" th:href="@{/board(currentPage = ${page})}">
+          [[${page}]]
+        </a>
+      </li>
+
+      <li th:class="page-item" th:if="${result.next}">
+        <a class="page-link" th:href="@{/board(currentPage = ${result.end + 1})}">
+          Next
+        </a>
+      </li>
+
+    </ul>
+
+    <a th:href="@{/board/create}" class="float-right">
+      <button class="btn border border-info">글쓰기</button>
+    </a>
+
+  </th:block>
+
+</th:block>
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.example.crud.mapper.BoardMapper">
+
+    <resultMap id="Board" type="org.example.crud.data.entity.Board"/>
+
+    <insert id="insertBoard">
+        INSERT INTO Board(title, content, author)
+        VALUES (#{board.title}, #{board.content}, #{board.author})
+    </insert>
+
+    <select id="selectBoardById" resultMap="Board">
+        SELECT * FROM Board AS b
+        WHERE b.bno = #{bno}
+    </select>
+
+    <select id="selectAllBoards" resultMap="Board">
+        SELECT * FROM Board AS b
+        ORDER BY b.bno DESC
+        LIMIT #{pageRequestDTO.size} OFFSET ${pageRequestDTO.size * (pageRequestDTO.currentPage - 1)}
+    </select>
+
+    <select id="selectAllBoardsCount">
+        SELECT COUNT(*)
+        FROM Board AS b
+        ORDER BY b.bno DESC
+    </select>
+
+    <update id="updateBoard">
+        UPDATE Board
+        SET Board.title = #{b.title}, Board.content = #{b.content}, Board.author = #{b.author}
+        WHERE Board.bno = #{b.bno}
+    </update>
+
+    <delete id="deleteBoardById">
+        DELETE FROM Board
+        WHERE Board.bno = #{bno}
+    </delete>
+
+</mapper>

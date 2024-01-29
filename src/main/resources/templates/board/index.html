@@ -2,6 +2,28 @@
 
   <th:block th:fragment="content">
 
+    <form action="/board" method="get" id="searchForm">
+      <div class="input-group">
+        <input type="hidden" name="page" value="1">
+        <div class="input-group-prepend">
+          <select class="custom-select" name="type">
+            <option th:selected="${pageRequestDTO.type == null}">--------</option>
+            <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
+            <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
+            <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목 + 내용</option>
+          </select>
+        </div>
+
+        <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}" type="text">
+
+        <div class="input-group-append" id="button-addon4">
+          <button class="btn btn-outline-secondary btn-search" type="button">Search</button>
+          <button class="btn btn-outline-secondary btn-clear" type="button">Clear</button>
+        </div>
+
+      </div>
+    </form>
+
     <table class="table table-striped">
 
       <thead>
@@ -52,6 +74,19 @@
     <a th:href="@{/board/create}" class="float-right">
       <button class="btn border border-info">글쓰기</button>
     </a>
+
+    <script th:inline="javascript">
+
+      let searchForm = $("#searchForm")
+      $('.btn-search').click((e) => {
+        searchForm.submit()
+      })
+
+      $('.btn-clear').click((e) => {
+        searchForm.empty().submit()
+      })
+
+    </script>
 
   </th:block>
 

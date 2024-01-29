@@ -17,6 +17,18 @@
 
     <select id="selectAllBoards" resultMap="Board">
         SELECT * FROM Board AS b
+        <choose>
+            <when test='pageRequestDTO.type == "t"'>
+                WHERE b.title LIKE CONCAT('%', #{pageRequestDTO.keyword}, '%')
+            </when>
+            <when test='pageRequestDTO.type == "c"'>
+                WHERE b.content LIKE CONCAT('%', #{pageRequestDTO.keyword}, '%')
+            </when>
+            <when test='pageRequestDTO.type == "tc"'>
+                WHERE b.title LIKE CONCAT('%', #{pageRequestDTO.keyword}, '%')
+                AND b.content LIKE CONCAT('%', #{pageRequestDTO.keyword}, '%')
+            </when>
+        </choose>
         ORDER BY b.bno DESC
         LIMIT #{pageRequestDTO.size} OFFSET ${pageRequestDTO.size * (pageRequestDTO.currentPage - 1)}
     </select>
